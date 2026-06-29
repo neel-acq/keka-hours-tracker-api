@@ -13,7 +13,11 @@ export async function POST(request) {
     let rawItems = body.rawApiItems;
 
     if (!rawItems) {
-      const data = await keka.fetchKekaAttendanceSummary(user.id, token);
+      const data = await keka.fetchKekaAttendanceSummary(
+        user.id,
+        token,
+        user.subdomain
+      );
       rawItems = data.data;
     }
 

@@ -9,7 +9,11 @@ export function OPTIONS() {
 
 export async function GET(request) {
   return authHandler(request, async ({ user, token }) => {
-    const attendance = await keka.getTodayAttendanceForClient(user.id, token);
+    const attendance = await keka.getTodayAttendanceForClient(
+      user.id,
+      token,
+      user.subdomain
+    );
     return withCors(jsonOk({ attendance: toClientAttendance(attendance) }));
   });
 }

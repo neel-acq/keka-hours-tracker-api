@@ -11,7 +11,11 @@ export async function GET(request) {
   return authHandler(request, async ({ user, token }) => {
     let scrapedAttendance = null;
     try {
-      scrapedAttendance = await keka.getTodayAttendanceForClient(user.id, token);
+      scrapedAttendance = await keka.getTodayAttendanceForClient(
+        user.id,
+        token,
+        user.subdomain
+      );
     } catch {
       scrapedAttendance = null;
     }
