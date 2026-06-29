@@ -13,7 +13,9 @@ export async function POST(request) {
         id: user.id,
         keka_user_id: user.keka_user_id,
         email: user.email,
-        display_name: user.display_name
+        display_name: user.display_name,
+        company_name: user.company_name,
+        subdomain: user.subdomain
       },
       extensionVersion: body.extensionVersion || null
     }));

@@ -44,6 +44,7 @@ npm run db:migrate
 | `002_workspace_sessions` | encrypted workspace cookies |
 | `003_teams_credentials` | encrypted Teams tokens |
 | `004_user_alert_state` | per-user alert cooldown flags |
+| `005_user_company_name` | `company_name` on extension_users |
 
 ## All queries in code
 

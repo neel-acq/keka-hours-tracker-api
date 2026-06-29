@@ -97,3 +97,7 @@ CREATE TABLE IF NOT EXISTS user_alert_state (
   target_exit_notification_sent BOOLEAN DEFAULT false,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+
+-- @migration 005_user_company_name
+ALTER TABLE extension_users
+  ADD COLUMN IF NOT EXISTS company_name TEXT;
