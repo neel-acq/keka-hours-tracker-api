@@ -1,4 +1,5 @@
 import { authHandler } from '@/lib/auth.js';
+import * as queries from '@/lib/db/queries.js';
 import { jsonOk, handleOptions, withCors } from '@/lib/http.js';
 
 export function OPTIONS() {
@@ -24,20 +25,30 @@ export async function POST(request) {
 
   return authHandler(
     request,
-    async ({ user }) =>
-      withCors(
+    async ({ user, userInfo }) => {
+      let updated = user;
+      if (displayName || companyName || userInfo?.display_name || userInfo?.company_name) {
+        updated =
+          (await queries.updateUserProfile(user.keka_user_id, {
+            display_name: displayName || userInfo?.display_name,
+            company_name: companyName || userInfo?.company_name
+          })) || user;
+      }
+
+      return withCors(
         jsonOk({
           user: {
-            id: user.id,
-            keka_user_id: user.keka_user_id,
-            email: user.email,
-            display_name: user.display_name,
-            company_name: user.company_name,
-            subdomain: user.subdomain
+            id: updated.id,
+            keka_user_id: updated.keka_user_id,
+            email: updated.email,
+            display_name: updated.display_name,
+            company_name: updated.company_name,
+            subdomain: updated.subdomain
           },
           extensionVersion: body.extensionVersion || null
         })
-      ),
+      );
+    },
     {
       extensionVersion: body.extensionVersion || null,
       clientProfile
