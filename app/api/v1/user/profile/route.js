@@ -1,5 +1,6 @@
 import { authHandler } from '@/lib/auth.js';
 import * as queries from '@/lib/db/queries.js';
+import { toClientProfile } from '@/lib/client-dto.js';
 import { jsonOk, handleOptions, withCors } from '@/lib/http.js';
 
 export function OPTIONS() {
@@ -39,14 +40,7 @@ export async function POST(request) {
 
       return withCors(
         jsonOk({
-          user: {
-            id: updated.id,
-            keka_user_id: updated.keka_user_id,
-            email: updated.email,
-            display_name: updated.display_name,
-            company_name: updated.company_name,
-            subdomain: updated.subdomain
-          }
+          profile: toClientProfile(updated)
         })
       );
     },

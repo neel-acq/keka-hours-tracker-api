@@ -18,6 +18,6 @@ export async function POST(request) {
       body.source || 'extension',
       extractTokenExpiry(payload)
     );
-    return withCors(jsonOk({ tokenSaved: saved }));
+    return withCors(jsonOk({ saved: !!saved }));
   });
 }

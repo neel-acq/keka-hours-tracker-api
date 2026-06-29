@@ -1,5 +1,6 @@
 import { authHandler } from '@/lib/auth.js';
 import * as keka from '@/lib/services/keka.js';
+import { toClientSyncMeta } from '@/lib/client-dto.js';
 import { jsonOk, jsonError, handleOptions, withCors } from '@/lib/http.js';
 
 export function OPTIONS() {
@@ -21,6 +22,13 @@ export async function POST(request) {
     }
 
     const syncedDays = await keka.syncAttendanceToDb(user.id, rawItems);
-    return withCors(jsonOk({ daysSynced: syncedDays.length, dates: syncedDays.map((d) => d.dayDate) }));
+    return withCors(
+      jsonOk(
+        toClientSyncMeta({
+          daysSynced: syncedDays.length,
+          dates: syncedDays.map((d) => d.dayDate)
+        })
+      )
+    );
   });
 }

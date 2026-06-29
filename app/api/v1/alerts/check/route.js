@@ -1,5 +1,6 @@
 import { authHandler } from '@/lib/auth.js';
 import * as alerts from '@/lib/services/alerts.js';
+import { toClientAlertResult } from '@/lib/client-dto.js';
 import { jsonOk, handleOptions, withCors } from '@/lib/http.js';
 
 export function OPTIONS() {
@@ -32,7 +33,7 @@ export async function GET(request) {
       scrapedAttendance
     });
 
-    return withCors(jsonOk(result));
+    return withCors(jsonOk(toClientAlertResult(result)));
   });
 }
 
@@ -40,9 +41,9 @@ export async function POST(request) {
   return authHandler(request, async ({ user }) => {
     const body = await request.json().catch(() => ({}));
     if (body.test === true) {
-      return withCors(jsonOk(alerts.buildTestAlert(body.language || 'en')));
+      return withCors(jsonOk(toClientAlertResult(alerts.buildTestAlert(body.language || 'en'))));
     }
     const result = await alerts.checkAlerts(user.id, body);
-    return withCors(jsonOk(result));
+    return withCors(jsonOk(toClientAlertResult(result)));
   });
 }
