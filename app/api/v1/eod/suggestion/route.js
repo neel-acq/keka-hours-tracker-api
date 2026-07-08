@@ -19,7 +19,9 @@ export async function GET(request) {
     } catch {
       scrapedAttendance = null;
     }
-    const suggestion = await teams.computeSmartEodSuggestion(user.id, scrapedAttendance);
+    const { searchParams } = new URL(request.url);
+    const reason = searchParams.get('reason');
+    const suggestion = await teams.computeSmartEodSuggestion(user.id, scrapedAttendance, { reason });
     return withCors(jsonOk({ suggestion }));
   });
 }
