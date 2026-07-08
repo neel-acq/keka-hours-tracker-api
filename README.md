@@ -83,6 +83,7 @@ Reload extension in `chrome://extensions`.
 | POST | `/api/v1/alerts/check` | Test alert (`{ test: true }`) |
 | POST | `/api/v1/eod/send` | Send Teams message |
 | GET | `/api/v1/eod/suggestion` | Smart EOD suggestion |
+| POST/DELETE | `/api/v1/admin/reset-db` | Remove all data from all tables |
 
 All `/api/v1/*` routes require header:
 
@@ -95,6 +96,19 @@ Authorization: Bearer <kekaAuthToken>
 - Schema: single file `db/schema.sql` (append-only migrations)
 - Queries: `lib/db/queries.js` only
 - Apply: `npm run db:migrate` or manual SQL Editor
+
+### Reset / Clear all data
+
+To remove all application data from all tables (for testing/resetting), run:
+
+```bash
+# Local development
+curl -X POST http://localhost:3000/api/v1/admin/reset-db
+
+# Production (if ADMIN_SECRET is configured in Vercel environment variables)
+curl -X POST https://your-project.vercel.app/api/v1/admin/reset-db \
+  -H "x-admin-secret: your_admin_secret"
+```
 
 ## Project structure
 

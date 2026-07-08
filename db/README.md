@@ -50,3 +50,16 @@ npm run db:migrate
 ## All queries in code
 
 Runtime DB access is centralized in [`lib/db/queries.js`](../lib/db/queries.js). Do not add ad-hoc SQL in route handlers.
+
+## Clear / Reset all data
+
+To remove all application data from all tables (while keeping schema migrations intact), use the admin API endpoint:
+
+```bash
+# Local development
+curl -X POST http://localhost:3000/api/v1/admin/reset-db
+
+# Production (if ADMIN_SECRET is configured in Vercel environment variables)
+curl -X POST https://your-project.vercel.app/api/v1/admin/reset-db \
+  -H "x-admin-secret: your_admin_secret"
+```
