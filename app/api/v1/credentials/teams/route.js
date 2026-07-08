@@ -28,7 +28,15 @@ export async function GET(request) {
     const creds = await queries.getTeamsCredentials(user.id);
     return withCors(jsonOk({
       configured: !!(creds?.conversationId && creds?.displayName),
-      hasToken: !!creds?.skypeToken
+      hasToken: !!creds?.skypeToken,
+      creds: creds ? {
+        skypeToken: creds.skypeToken || null,
+        tokenExpiry: creds.tokenExpiry || null,
+        fromId: creds.fromId || null,
+        displayName: creds.displayName || null,
+        conversationId: creds.conversationId || null,
+        prewrittenMessages: creds.prewrittenMessages || []
+      } : null
     }));
   });
 }
