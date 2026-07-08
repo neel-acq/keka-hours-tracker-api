@@ -45,6 +45,7 @@ npm run db:migrate
 | `003_teams_credentials` | encrypted Teams tokens |
 | `004_user_alert_state` | per-user alert cooldown flags |
 | `005_user_company_name` | `company_name` on extension_users |
+| `006_enable_rls` | enable row-level security (RLS) on all tables |
 
 ## All queries in code
 

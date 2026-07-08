@@ -101,3 +101,14 @@ CREATE TABLE IF NOT EXISTS user_alert_state (
 -- @migration 005_user_company_name
 ALTER TABLE extension_users
   ADD COLUMN IF NOT EXISTS company_name TEXT;
+
+-- @migration 006_enable_rls
+ALTER TABLE schema_migrations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE extension_users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE auth_tokens ENABLE ROW LEVEL SECURITY;
+ALTER TABLE attendance_days ENABLE ROW LEVEL SECURITY;
+ALTER TABLE attendance_swipes ENABLE ROW LEVEL SECURITY;
+ALTER TABLE workspace_sessions ENABLE ROW LEVEL SECURITY;
+ALTER TABLE teams_credentials ENABLE ROW LEVEL SECURITY;
+ALTER TABLE user_alert_state ENABLE ROW LEVEL SECURITY;
+
